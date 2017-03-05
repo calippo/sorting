@@ -1,10 +1,12 @@
 package sorting
 
-package object selection {
+object selection {
   def selectionSort[T <% Ordered[T]](unsorted: Seq[T]): Seq[T] = {
     unsorted.foldLeft((Seq.empty[T], unsorted)) { (acc, cur) =>
       val (sortedPortion, unsortedPortion) = acc
-      (sortedPortion :+ unsortedPortion.min, unsortedPortion.tail)
+      //TODO improve efficiency of deletion here
+      val remainingPortion = unsortedPortion diff List(unsortedPortion.min)
+      (sortedPortion :+ unsortedPortion.min, remainingPortion)
     }._1
   }
 }

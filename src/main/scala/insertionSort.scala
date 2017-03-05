@@ -1,6 +1,6 @@
 package sorting
 
-package object insertion {
+object insertion {
   /**
     * Worst case: O(n²)
     * Best case: O(n) comparisons, O(1) swaps
