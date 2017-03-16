@@ -7,17 +7,18 @@ object insertion {
     * Avg case: O(n²) comparisons, O(n) swaps
     * Worst case space: O(n) total, O(1) auxiliary
   **/
-  def insertionSort[T <% Ordered[T]](unsorted: Seq[T]): Seq[T] = {
-    unsorted.foldLeft((Seq.empty[T], unsorted)) { (acc, cur) =>
+  def insertionSort[T <% Ordered[T]](unsorted: List[T]): List[T] = {
+    val (sorted, _) = unsorted.foldLeft((List.empty[T], unsorted)) { (acc, cur) =>
       val (sortedPortion, unsortedPortion) = acc
-      (insertInSortedPortion(cur, sortedPortion), unsortedPortion.tail)
-    }._1
+      (insertInSortedList(cur, sortedPortion), unsortedPortion.tail)
+    }
+
+    sorted
   }
 
-  private[this] def insertInSortedPortion[T <% Ordered[T]](e: T, sortedPortion: Seq[T]): Seq[T] = {
-    sortedPortion.foldLeft(Seq.empty[T]) { (acc, cur) =>
-      if (e < cur) acc ++ Seq(cur)
-      else acc.init ++ Seq(cur, e)
-    }
+  private[this] def insertInSortedList[T <% Ordered[T]](elem: T, sortedPortion: List[T]): List[T] = {
+    val ord = implicitly[Ordering[T]]
+    val (min, maj) = sortedPortion.partition(ord.lt(_, elem))
+    min ::: elem :: maj
   }
 }
