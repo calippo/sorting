@@ -8,17 +8,18 @@ object insertion {
     * Worst case space: O(n) total, O(1) auxiliary
   **/
   def insertionSort[T <% Ordered[T]](unsorted: List[T]): List[T] = {
-    val (sorted, _) = unsorted.foldLeft((List.empty[T], unsorted)) { (acc, cur) =>
-      val (sortedPortion, unsortedPortion) = acc
-      (insertInSortedList(cur, sortedPortion), unsortedPortion.tail)
-    }
-
-    sorted
+    insertionSortAux(List.empty[T], unsorted)
   }
 
-  private[this] def insertInSortedList[T <% Ordered[T]](elem: T, sortedPortion: List[T]): List[T] = {
-    val ord = implicitly[Ordering[T]]
-    val (min, maj) = sortedPortion.partition(ord.lt(_, elem))
+  private[this] def insertionSortAux[T <% Ordered[T]](sorted: List[T], unsorted: List[T]): List[T] = {
+    unsorted match {
+      case Nil => sorted
+      case head :: tail => insertionSortAux(insertInSortedList(head, sorted), tail)
+    }
+  }
+
+  private[this] def insertInSortedList[T <% Ordered[T]](elem: T, sorted: List[T])(implicit ord: Ordering[T]): List[T] = {
+    val (min, maj) = sorted.partition(ord.lt(_, elem))
     min ::: elem :: maj
   }
 }

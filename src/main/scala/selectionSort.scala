@@ -10,7 +10,7 @@ object selection {
   def selectionSort[T <% Ordered[T]](unsorted: Seq[T]): Seq[T] = {
     unsorted match {
       case Nil => Nil
-      case notEmptyList =>
+      case nonEmptyList =>
         val min = unsorted.min
         min +: selectionSort(unsorted diff List(min))
     }
