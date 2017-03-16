@@ -8,10 +8,11 @@ object bubble {
     * Worst case space: O(1) auxiliary
   **/
   def bubbleSort[T <% Ordered[T]](unsorted: Seq[T]): Seq[T] = {
-    if (unsorted.length <= 1) unsorted
-    else {
-      val slidden = slideMaxToEnd(unsorted)
-      bubbleSort(slidden.init) :+ slidden.last
+    unsorted match {
+      case Nil => Nil
+      case nonEmptyList =>
+        val slidden = slideMaxToEnd(nonEmptyList)
+        bubbleSort(slidden.init) :+ slidden.last
     }
   }
 
