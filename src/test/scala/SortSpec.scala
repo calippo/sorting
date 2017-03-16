@@ -7,6 +7,7 @@ object SortSpec extends Properties("sort") {
   import insertion._
   import selection._
   import bubble._
+  import quick._
 
   property("insertion sorted output is sorted") = forAll { (a: List[Double]) => insertionSort(a).isOrdered }
   property("insertion sorted output contains original elements") = forAll { (a: List[Double]) => insertionSort(a).toSet == a.toSet }
@@ -14,8 +15,9 @@ object SortSpec extends Properties("sort") {
   property("selection sorted on list of double is sorted") = forAll { (a: List[Double]) => selectionSort(a).isOrdered }
   property("selection sorted output contains original elements") = forAll { (a: List[Double]) => selectionSort(a).toSet == a.toSet }
 
-
   property("bubble sorted on list of double is sorted") = forAll { (a: List[Double]) => bubbleSort(a).isOrdered }
   property("bubble sorted output contains original elements") = forAll { (a: List[Double]) => bubbleSort(a).toSet == a.toSet }
 
+  property("quick sorted on list of double is sorted") = forAll { (a: List[Double]) => quickSort(a).isOrdered }
+  property("quick sorted output contains original elements") = forAll { (a: List[Double]) => quickSort(a).toSet == a.toSet }
 }
