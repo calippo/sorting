@@ -8,12 +8,11 @@ object selection {
     * Worst case space: O(n) total, O(1) auxiliary
   **/
   def selectionSort[T <% Ordered[T]](unsorted: Seq[T]): Seq[T] = {
-    val (sorted, _) = (1 to unsorted.length).foldLeft((Seq.empty[T], unsorted)) { (acc, _) =>
-      val (sortedPortion, unsortedPortion) = acc
-      val remainingPortion = unsortedPortion diff List(unsortedPortion.min)
-      (sortedPortion :+ unsortedPortion.min, remainingPortion)
+    unsorted match {
+      case Nil => Nil
+      case notEmptyList =>
+        val min = unsorted.min
+        min +: selectionSort(unsorted diff List(min))
     }
-
-    sorted
   }
 }
