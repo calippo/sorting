@@ -8,10 +8,11 @@ object quick {
     * Worst case space: O(n) auxiliary
   **/
   def quickSort[T <% Ordered[T]](unsorted: List[T])(implicit ord: Ordering[T]): List[T] = {
-    if (unsorted.isEmpty) return unsorted
-
-    val pivot = unsorted.last
-    val (min, maj) = (unsorted diff List(pivot)).partition(ord.lt(_, pivot))
-    quickSort(min) ::: pivot :: quickSort(maj)
+    unsorted match {
+      case Nil => Nil
+      case pivot :: tail =>
+        val (min, maj) = (unsorted diff List(pivot)).partition(ord.lt(_, pivot))
+        quickSort(min) ::: pivot :: quickSort(maj)
+    }
   }
 }
